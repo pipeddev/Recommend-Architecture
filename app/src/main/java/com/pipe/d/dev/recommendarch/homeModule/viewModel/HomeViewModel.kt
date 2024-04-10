@@ -22,7 +22,7 @@ class HomeViewModel(private val repository: HomeRepository): BaseWineViewModel()
         }
     }
 
-    override fun addWine(wine: Wine) {
+    fun addWine(wine: Wine) {
         executeAction {
             repository.addWine(wine) {
                 setSnackbarMsg(R.string.room_save_success)

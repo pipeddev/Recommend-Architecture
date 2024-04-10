@@ -32,8 +32,6 @@ class FavouriteFragment : WineBaseFragment(), OnClickListener {
 
     private val adapter: WineFavListAdapter by inject { parametersOf(this) }
 
-    //private lateinit var vm: FavoriteViewModel
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -69,6 +67,11 @@ class FavouriteFragment : WineBaseFragment(), OnClickListener {
 
     private fun showMsg(msgRes: Int) {
         Snackbar.make(binding.root, msgRes, Snackbar.LENGTH_SHORT).show()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.viewModel?.onPause()
     }
 
     /*
