@@ -5,13 +5,16 @@ import com.pipe.d.dev.recommendarch.common.entities.MyException
 import com.pipe.d.dev.recommendarch.common.entities.Wine
 import com.pipe.d.dev.recommendarch.common.model.BaseRepository
 import com.pipe.d.dev.recommendarch.common.utils.Constants
+import com.pipe.d.dev.recommendarch.homeModule.model.domain.HomeRoomDatabase
+import com.pipe.d.dev.recommendarch.homeModule.model.domain.HomeWineService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.random.Random
 
 class HomeRepository(
     private val db: HomeRoomDatabase,
-    private val service: HomeWineService): BaseRepository() {
+    private val service: HomeWineService
+): BaseRepository() {
 
     suspend fun getAllWines(callback: (List<Wine>) -> Unit) = withContext(Dispatchers.IO) {
         executeAction(MyException(Constants.EC_REQUEST, R.string.common_general_fail)) {
