@@ -2,60 +2,27 @@ package com.pipe.d.dev.recommendarch.updateModule.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.pipe.d.dev.recommendarch.R
-import com.pipe.d.dev.recommendarch.common.entities.MyException
 import com.pipe.d.dev.recommendarch.common.entities.Wine
-import com.pipe.d.dev.recommendarch.common.utils.Constants
+import com.pipe.d.dev.recommendarch.common.viewModel.BaseViewModel
 import com.pipe.d.dev.recommendarch.updateModule.model.UpdateRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
-class UpdateViewModel(private val repository: UpdateRepository): ViewModel() {
-    private val _inProgress = MutableLiveData<Boolean>()
-    val inProgress: LiveData<Boolean> = _inProgress
-
-    private val _snackBarMsg = MutableLiveData<Int>()
-    val snackBarMsg: LiveData<Int> = _snackBarMsg
-
+class UpdateViewModel(private val repository: UpdateRepository): BaseViewModel() {
     private val _wine = MutableLiveData<Wine>()
     val wine: LiveData<Wine> = _wine
 
     fun requestWine(id: Double) {
-        viewModelScope.launch {
-            _inProgress.value = Constants.SHOW
-            try {
-                withContext(Dispatchers.IO) {
-                    repository.requestWine(id) {wine ->
-                        _wine.postValue(wine)
-                    }
-                }
-            } catch (e: MyException) {
-                _snackBarMsg.postValue(e.resMsg)
-            } finally {
-                _inProgress.value = Constants.HIDE
+        executeAction {
+            repository.requestWine(id) {wine ->
+                _wine.postValue(wine)
             }
         }
     }
 
     fun updateWine(newRating: String) {
-        viewModelScope.launch {
-            _inProgress.value = Constants.SHOW
-            try {
-                withContext(Dispatchers.IO) {
-                    _wine.value?.let {
-                        it.rating.average = newRating
-                        repository.updateWine(it) {
-                            _snackBarMsg.postValue(R.string.room_save_success)
-                        }
-                    }
-                }
-            } catch (e: MyException) {
-                _snackBarMsg.postValue(e.resMsg)
-            } finally {
-                _inProgress.value = Constants.HIDE
+        executeAction {
+            repository.updateWine(wine.value, newRating) {
+                setSnackbarMsg(R.string.room_save_success)
             }
         }
     }
