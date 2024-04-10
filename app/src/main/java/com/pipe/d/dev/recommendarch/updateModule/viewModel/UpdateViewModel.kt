@@ -26,4 +26,6 @@ class UpdateViewModel(private val repository: UpdateRepository): BaseViewModel()
             }
         }
     }
+
+    override fun onPause() = clearValues()
 }
