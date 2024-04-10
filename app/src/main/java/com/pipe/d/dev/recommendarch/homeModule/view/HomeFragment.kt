@@ -69,8 +69,8 @@ class HomeFragment : WineBaseFragment(), OnClickListener {
     }
 
     private fun setupAdapter() {
-        adapter = WineListAdapter()
-        adapter.setOnClickListener(this)
+        adapter = WineListAdapter(this, WineDiff())
+        //adapter.setOnClickListener(this)
     }
 
     private fun setupRecyclerView() {

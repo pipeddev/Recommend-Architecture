@@ -14,6 +14,7 @@ import com.pipe.d.dev.recommendarch.favoriteModule.model.FavoriteRepository
 import com.pipe.d.dev.recommendarch.favoriteModule.model.RoomDatabase
 import com.pipe.d.dev.recommendarch.favoriteModule.viewModel.FavoriteViewModel
 import com.pipe.d.dev.recommendarch.favoriteModule.viewModel.FavoriteViewModelFactory
+import com.pipe.d.dev.recommendarch.homeModule.view.WineDiff
 import com.pipe.d.dev.recommendarch.updateModule.view.UpdateDialogFragment
 
 /****
@@ -63,8 +64,8 @@ class FavouriteFragment : WineBaseFragment(), OnClickListener {
     }
 
     private fun setupAdapter() {
-        adapter = WineFavListAdapter()
-        adapter.setOnClickListener(this)
+        adapter = WineFavListAdapter(this, WineDiff())
+        //adapter.setOnClickListener(this)
     }
 
     private fun setupRecyclerView() {
