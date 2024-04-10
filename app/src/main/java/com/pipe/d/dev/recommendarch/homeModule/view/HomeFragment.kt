@@ -2,7 +2,6 @@ package com.pipe.d.dev.recommendarch.homeModule.view
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -13,11 +12,7 @@ import com.pipe.d.dev.recommendarch.R
 import com.pipe.d.dev.recommendarch.common.entities.Wine
 import com.pipe.d.dev.recommendarch.common.utils.OnClickListener
 import com.pipe.d.dev.recommendarch.common.view.WineBaseFragment
-import com.pipe.d.dev.recommendarch.homeModule.model.HomeRepository
-import com.pipe.d.dev.recommendarch.homeModule.model.HomeRoomDatabase
-import com.pipe.d.dev.recommendarch.homeModule.model.HomeWineService
 import com.pipe.d.dev.recommendarch.homeModule.viewModel.HomeViewModel
-import com.pipe.d.dev.recommendarch.homeModule.viewModel.HomeViewModelFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
