@@ -14,8 +14,8 @@ import com.pipe.d.dev.recommendarch.common.entities.Wine
 import com.pipe.d.dev.recommendarch.common.utils.OnClickListener
 import com.pipe.d.dev.recommendarch.common.view.WineBaseFragment
 import com.pipe.d.dev.recommendarch.homeModule.model.HomeRepository
-import com.pipe.d.dev.recommendarch.homeModule.model.RoomDatabase
-import com.pipe.d.dev.recommendarch.homeModule.model.WineService
+import com.pipe.d.dev.recommendarch.homeModule.model.HomeRoomDatabase
+import com.pipe.d.dev.recommendarch.homeModule.model.HomeWineService
 import com.pipe.d.dev.recommendarch.homeModule.viewModel.HomeViewModel
 import com.pipe.d.dev.recommendarch.homeModule.viewModel.HomeViewModelFactory
 import kotlinx.coroutines.Dispatchers
@@ -41,7 +41,7 @@ import org.koin.core.parameter.parametersOf
 class HomeFragment : WineBaseFragment(), OnClickListener {
 
     private val adapter: WineListAdapter by inject { parametersOf(this) }
-    private lateinit var vm: HomeViewModel
+    //private lateinit var vm: HomeViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,8 +52,10 @@ class HomeFragment : WineBaseFragment(), OnClickListener {
     }
 
     private fun setupViewModel() {
-        vm = ViewModelProvider(this, HomeViewModelFactory(
-            HomeRepository(RoomDatabase(), WineService())))[HomeViewModel::class.java]
+        /*vm = ViewModelProvider(this, HomeViewModelFactory(
+            HomeRepository(HomeRoomDatabase(), HomeWineService())))[HomeViewModel::class.java]
+         */
+        val vm: HomeViewModel by inject()
         binding.lifecycleOwner = this
         binding.setVariable(BR.viewModel, vm)
     }
@@ -82,7 +84,7 @@ class HomeFragment : WineBaseFragment(), OnClickListener {
 
     override fun onPause() {
         super.onPause()
-        vm.onPause()
+        binding.viewModel?.onPause()
     }
 
     /*
@@ -106,7 +108,7 @@ class HomeFragment : WineBaseFragment(), OnClickListener {
     private fun addToFavourites(wine: Wine) {
         lifecycleScope.launch(Dispatchers.IO) {
             wine.isFavorite = true
-            vm.addWine(wine)
+            binding.viewModel?.addWine(wine)
         }
     }
 }

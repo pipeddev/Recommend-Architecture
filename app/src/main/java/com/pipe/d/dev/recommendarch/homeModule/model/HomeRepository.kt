@@ -10,8 +10,8 @@ import kotlinx.coroutines.withContext
 import kotlin.random.Random
 
 class HomeRepository(
-    private val db: RoomDatabase,
-    private val service: WineService): BaseRepository() {
+    private val db: HomeRoomDatabase,
+    private val service: HomeWineService): BaseRepository() {
 
     suspend fun getAllWines(callback: (List<Wine>) -> Unit) = withContext(Dispatchers.IO) {
         executeAction(MyException(Constants.EC_REQUEST, R.string.common_general_fail)) {
