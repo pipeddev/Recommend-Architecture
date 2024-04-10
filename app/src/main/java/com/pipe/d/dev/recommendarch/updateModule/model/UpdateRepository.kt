@@ -16,7 +16,7 @@ class UpdateRepository(private val db: UpdateRoomDatabase): BaseRepository() {
         }
     }
 
-    suspend fun updateWine(wine: Wine, newRating: String, callback: () -> Unit) = withContext(Dispatchers.IO) {
+    suspend fun updateWine(wine: Wine?, newRating: String, callback: () -> Unit) = withContext(Dispatchers.IO) {
         executeAction(MyException(Constants.EC_UPDATE_WINE, R.string.room_update_fail)) {
             db.updateWine(wine, newRating) { callback() }
         }
