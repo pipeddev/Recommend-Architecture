@@ -11,7 +11,7 @@ import com.pipe.d.dev.recommendarch.common.utils.Constants
 import com.pipe.d.dev.recommendarch.common.utils.OnClickListener
 import com.pipe.d.dev.recommendarch.common.view.WineBaseFragment
 import com.pipe.d.dev.recommendarch.favoriteModule.model.FavoriteRepository
-import com.pipe.d.dev.recommendarch.favoriteModule.model.RoomDatabase
+import com.pipe.d.dev.recommendarch.favoriteModule.model.domain.FavoriteRoomDatabase
 import com.pipe.d.dev.recommendarch.favoriteModule.viewModel.FavoriteViewModel
 import com.pipe.d.dev.recommendarch.favoriteModule.viewModel.FavoriteViewModelFactory
 import com.pipe.d.dev.recommendarch.homeModule.view.WineDiff
@@ -47,7 +47,7 @@ class FavouriteFragment : WineBaseFragment(), OnClickListener {
 
     private fun setupViewModel() {
         vm = ViewModelProvider(this, FavoriteViewModelFactory(
-            FavoriteRepository(RoomDatabase())))[FavoriteViewModel::class.java]
+            FavoriteRepository(FavoriteRoomDatabase())))[FavoriteViewModel::class.java]
         binding.lifecycleOwner = this
         binding.setVariable(BR.viewModel, vm)
     }
