@@ -12,10 +12,9 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import com.pipe.d.dev.recommendarch.BR
 import com.pipe.d.dev.recommendarch.R
-import com.pipe.d.dev.recommendarch.common.entities.Wine
 import com.pipe.d.dev.recommendarch.common.utils.Constants
 import com.pipe.d.dev.recommendarch.databinding.FragmentDialogUpdateBinding
-import com.pipe.d.dev.recommendarch.updateModule.model.RoomDatabase
+import com.pipe.d.dev.recommendarch.updateModule.model.domain.UpdateRoomDatabase
 import com.pipe.d.dev.recommendarch.updateModule.model.UpdateRepository
 import com.pipe.d.dev.recommendarch.updateModule.viewModel.UpdateViewModel
 import com.pipe.d.dev.recommendarch.updateModule.viewModel.UpdateViewModelFactory
@@ -89,7 +88,7 @@ class UpdateDialogFragment : DialogFragment(), OnShowListener {
 
     private fun setupViewModel() {
         vm = ViewModelProvider(this,
-            UpdateViewModelFactory(UpdateRepository(RoomDatabase())))[UpdateViewModel::class.java]
+            UpdateViewModelFactory(UpdateRepository(UpdateRoomDatabase())))[UpdateViewModel::class.java]
         binding.lifecycleOwner = this
         binding.setVariable(BR.viewModel, vm)
     }
