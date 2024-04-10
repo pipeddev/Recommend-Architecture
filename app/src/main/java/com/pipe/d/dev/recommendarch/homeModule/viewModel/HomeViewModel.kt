@@ -17,6 +17,14 @@ class HomeViewModel(private val repository: HomeRepository): BaseWineViewModel()
         getAllWines()
     }
 
+    fun onPause() {
+        clearValues()
+    }
+
+    private fun clearValues() {
+        setSnackbarMsg(null)
+    }
+
     override fun getAllWines() {
         viewModelScope.launch {
             setInProgress(Constants.SHOW)
