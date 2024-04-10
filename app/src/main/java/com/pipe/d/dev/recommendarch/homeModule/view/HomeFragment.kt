@@ -103,7 +103,7 @@ class HomeFragment : WineBaseFragment(), OnClickListener {
     private fun addToFavourites(wine: Wine) {
         lifecycleScope.launch(Dispatchers.IO) {
             wine.isFavorite = true
-            binding.viewModel?.addWine(wine)
+            (binding.viewModel as? HomeViewModel)?.addWine(wine)
         }
     }
 }

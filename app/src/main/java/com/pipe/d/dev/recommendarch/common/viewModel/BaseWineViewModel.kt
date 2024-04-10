@@ -2,7 +2,6 @@ package com.pipe.d.dev.recommendarch.common.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.pipe.d.dev.recommendarch.common.entities.Wine
 
 open class BaseWineViewModel: BaseViewModel() {
@@ -15,6 +14,4 @@ open class BaseWineViewModel: BaseViewModel() {
     }
 
     open fun getAllWines() {}
-
-    open fun addWine(wine: Wine) {}
 }

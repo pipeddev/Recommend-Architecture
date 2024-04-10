@@ -10,6 +10,8 @@ class FavoriteViewModel(private val repository: FavoriteRepository): BaseWineVie
         getAllWines()
     }
 
+    override fun onPause() = clearValues()
+
     override fun getAllWines() {
         executeAction {
             repository.getAllWines { wines ->
