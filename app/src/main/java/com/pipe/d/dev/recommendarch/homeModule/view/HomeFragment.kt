@@ -20,6 +20,8 @@ import com.pipe.d.dev.recommendarch.homeModule.viewModel.HomeViewModel
 import com.pipe.d.dev.recommendarch.homeModule.viewModel.HomeViewModelFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 
 /****
@@ -38,14 +40,13 @@ import kotlinx.coroutines.launch
  ***/
 class HomeFragment : WineBaseFragment(), OnClickListener {
 
-    private lateinit var adapter: WineListAdapter
+    private val adapter: WineListAdapter by inject { parametersOf(this) }
     private lateinit var vm: HomeViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupViewModel()
-        setupAdapter()
         setupRecyclerView()
         setupObservers()
     }
@@ -66,11 +67,6 @@ class HomeFragment : WineBaseFragment(), OnClickListener {
                 adapter.submitList(wines)
             }
         }
-    }
-
-    private fun setupAdapter() {
-        adapter = WineListAdapter(this, WineDiff())
-        //adapter.setOnClickListener(this)
     }
 
     private fun setupRecyclerView() {

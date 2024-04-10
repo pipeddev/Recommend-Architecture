@@ -17,6 +17,7 @@ glide = "4.16.0"
 swipeRefresh = "1.2.0-alpha01"
 retrofit = "2.9.0"
 org-jetbrains-kotlin-android = "1.8.0"
+koin = "3.5.4"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -40,6 +41,7 @@ androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "s
 squareup-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit"}
 squareup-retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 squareup-retrofit-scalars = { group = "com.squareup.retrofit2", name = "converter-scalars", version.ref = "retrofit" }
+android-koin = { group = "io.insert-koin", name = "koin-android", version.ref = "koin"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
