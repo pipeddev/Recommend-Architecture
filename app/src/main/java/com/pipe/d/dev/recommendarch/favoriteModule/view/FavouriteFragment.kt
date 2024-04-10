@@ -2,7 +2,6 @@ package com.pipe.d.dev.recommendarch.favoriteModule.view
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.pipe.d.dev.recommendarch.BR
@@ -10,12 +9,10 @@ import com.pipe.d.dev.recommendarch.common.entities.Wine
 import com.pipe.d.dev.recommendarch.common.utils.Constants
 import com.pipe.d.dev.recommendarch.common.utils.OnClickListener
 import com.pipe.d.dev.recommendarch.common.view.WineBaseFragment
-import com.pipe.d.dev.recommendarch.favoriteModule.model.FavoriteRepository
-import com.pipe.d.dev.recommendarch.favoriteModule.model.domain.FavoriteRoomDatabase
 import com.pipe.d.dev.recommendarch.favoriteModule.viewModel.FavoriteViewModel
-import com.pipe.d.dev.recommendarch.favoriteModule.viewModel.FavoriteViewModelFactory
-import com.pipe.d.dev.recommendarch.homeModule.view.WineDiff
 import com.pipe.d.dev.recommendarch.updateModule.view.UpdateDialogFragment
+import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 /****
  * Project: Wines
@@ -33,21 +30,21 @@ import com.pipe.d.dev.recommendarch.updateModule.view.UpdateDialogFragment
  ***/
 class FavouriteFragment : WineBaseFragment(), OnClickListener {
 
-    private lateinit var adapter: WineFavListAdapter
-    private lateinit var vm: FavoriteViewModel
+    private val adapter: WineFavListAdapter by inject { parametersOf(this) }
+
+    //private lateinit var vm: FavoriteViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupViewModel()
-        setupAdapter()
         setupRecyclerView()
         setupObservers()
     }
 
     private fun setupViewModel() {
-        vm = ViewModelProvider(this, FavoriteViewModelFactory(
-            FavoriteRepository(FavoriteRoomDatabase())))[FavoriteViewModel::class.java]
+        val vm: FavoriteViewModel by inject()
+
         binding.lifecycleOwner = this
         binding.setVariable(BR.viewModel, vm)
     }
@@ -61,11 +58,6 @@ class FavouriteFragment : WineBaseFragment(), OnClickListener {
                 adapter.submitList(wines)
             }
         }
-    }
-
-    private fun setupAdapter() {
-        adapter = WineFavListAdapter(this, WineDiff())
-        //adapter.setOnClickListener(this)
     }
 
     private fun setupRecyclerView() {
@@ -83,8 +75,7 @@ class FavouriteFragment : WineBaseFragment(), OnClickListener {
     * OnClickListener
     * */
     override fun onFavorite(wine: Wine) {
-        wine.isFavorite = !wine.isFavorite
-        if (wine.isFavorite) vm.addWine(wine) else vm.deleteWine(wine)
+        (binding.viewModel as? FavoriteViewModel)?.updateFavorite(wine)
     }
 
     override fun onLongClick(wine: Wine) {
