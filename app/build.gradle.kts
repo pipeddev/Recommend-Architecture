@@ -70,6 +70,9 @@ dependencies {
     implementation(libs.squareup.retrofit.gson)
     implementation(libs.squareup.retrofit.scalars)
 
+    // Koin for Android
+    implementation(libs.android.koin)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

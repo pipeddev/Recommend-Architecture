@@ -3,6 +3,8 @@ package com.pipe.d.dev.recommendarch
 import android.app.Application
 import androidx.room.Room
 import com.pipe.d.dev.recommendarch.common.dataAccess.room.WineDatabase
+import com.pipe.d.dev.recommendarch.common.di.adapterModule
+import org.koin.core.context.startKoin
 
 /****
  * Project: Wines
@@ -25,6 +27,10 @@ class WineApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        startKoin {
+            modules(adapterModule)
+        }
 
         database = Room.databaseBuilder(this,
             WineDatabase::class.java,
