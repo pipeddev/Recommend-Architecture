@@ -16,20 +16,16 @@ class HomeViewModel(private val repository: HomeRepository): BaseWineViewModel()
 
     override fun getAllWines() {
         executeAction {
-            withContext(Dispatchers.IO) {
-                repository.getAllWines { wines ->
-                    setWines(wines)
-                }
+            repository.getAllWines { wines ->
+                setWines(wines)
             }
         }
     }
 
     override fun addWine(wine: Wine) {
         executeAction {
-            withContext(Dispatchers.IO) {
-                repository.addWine(wine) {
-                    setSnackbarMsg(R.string.room_save_success)
-                }
+            repository.addWine(wine) {
+                setSnackbarMsg(R.string.room_save_success)
             }
         }
     }
