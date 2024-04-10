@@ -8,6 +8,7 @@
     <string name="account_btn_sign_out">Sign Out</string>
 
     <string name="common_general_fail">Error loading.</string>
+    <string name="common_unknown_error">Unknown Error.</string>
 
     <string name="dialog_update_title">Update rating</string>
     <string name="dialog_update_ok">Update</string>

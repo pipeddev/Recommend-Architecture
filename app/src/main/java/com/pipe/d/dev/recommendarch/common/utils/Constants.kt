@@ -32,6 +32,7 @@ object Constants {
     const val EC_SAVE_WINE = 400
     const val EC_GET_WINE = 410
     const val EC_UPDATE_WINE = 420
+    const val EC_UNKNOWN = 500
 
     const val SHOW = true
     const val HIDE = false
