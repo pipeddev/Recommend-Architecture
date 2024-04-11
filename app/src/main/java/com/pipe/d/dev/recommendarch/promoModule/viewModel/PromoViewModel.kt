@@ -6,13 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pipe.d.dev.recommendarch.common.entities.MyException
 import com.pipe.d.dev.recommendarch.common.entities.Promo
+import com.pipe.d.dev.recommendarch.common.viewModel.BaseViewModel
 import com.pipe.d.dev.recommendarch.promoModule.model.PromoRepository
 import kotlinx.coroutines.launch
 
-class PromoViewModel(private val repository: PromoRepository): ViewModel() {
-    private val _snackBarMsg = MutableLiveData<Int>()
-    val snackBarMsg: LiveData<Int> = _snackBarMsg
-
+class PromoViewModel(private val repository: PromoRepository): BaseViewModel() {
     private val _promos = MutableLiveData<List<Promo>>()
     val promos: LiveData<List<Promo>> = _promos
 
@@ -21,13 +19,12 @@ class PromoViewModel(private val repository: PromoRepository): ViewModel() {
     }
 
     private fun getPromos() {
-        viewModelScope.launch {
-
-            try {
-                _promos.value = repository.getPromos()
-            } catch (ex: MyException) {
-                _snackBarMsg.value = ex.resMsg
+        executeAction {
+            repository.getPromos { promos ->
+                _promos.value = promos
             }
         }
     }
+
+    override fun onPause() = clearValues()
 }
