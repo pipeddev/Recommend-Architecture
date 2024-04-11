@@ -1,5 +1,6 @@
 package com.pipe.d.dev.recommendarch.common.di
 
+import com.pipe.d.dev.recommendarch.common.viewModel.ShareFragmentViewModel
 import com.pipe.d.dev.recommendarch.favoriteModule.viewModel.FavoriteViewModel
 import com.pipe.d.dev.recommendarch.homeModule.viewModel.HomeViewModel
 import com.pipe.d.dev.recommendarch.updateModule.viewModel.UpdateViewModel
@@ -10,4 +11,5 @@ val viewModelModule = module {
     viewModel { HomeViewModel(get()) }
     viewModel { FavoriteViewModel(get()) }
     viewModel { UpdateViewModel(get()) }
+    viewModel { ShareFragmentViewModel() }
 }

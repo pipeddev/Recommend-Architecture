@@ -9,9 +9,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import com.pipe.d.dev.recommendarch.BR
 import com.pipe.d.dev.recommendarch.R
 import com.pipe.d.dev.recommendarch.common.utils.Constants
+import com.pipe.d.dev.recommendarch.common.viewModel.ShareFragmentViewModel
 import com.pipe.d.dev.recommendarch.databinding.FragmentDialogUpdateBinding
 import com.pipe.d.dev.recommendarch.updateModule.viewModel.UpdateViewModel
 import org.koin.android.ext.android.inject
@@ -37,8 +39,8 @@ class UpdateDialogFragment : DialogFragment(), OnShowListener {
 
 
     private var _wineId = -1.0
-
-    private var onUpdateListener: () -> Unit = {}
+    private val sVm: ShareFragmentViewModel by activityViewModels()
+    /*private var onUpdateListener: () -> Unit = {}*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,9 +110,9 @@ class UpdateDialogFragment : DialogFragment(), OnShowListener {
         if (_wineId != -1.0) binding.viewModel?.requestWine(_wineId)
     }
 
-    fun setOnUpdateListener(block: () -> Unit) {
+    /*fun setOnUpdateListener(block: () -> Unit) {
         onUpdateListener = block
-    }
+    }*/
 
     override fun onPause() {
         super.onPause()
@@ -118,7 +120,8 @@ class UpdateDialogFragment : DialogFragment(), OnShowListener {
     }
 
     override fun onDismiss(dialog: DialogInterface) {
-        onUpdateListener()
+        //onUpdateListener()
+        sVm.isDismiss.value = true
         super.onDismiss(dialog)
     }
 

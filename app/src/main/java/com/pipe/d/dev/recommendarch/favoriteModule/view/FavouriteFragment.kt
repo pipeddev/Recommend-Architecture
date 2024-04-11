@@ -2,16 +2,20 @@ package com.pipe.d.dev.recommendarch.favoriteModule.view
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.pipe.d.dev.recommendarch.BR
+import com.pipe.d.dev.recommendarch.R
 import com.pipe.d.dev.recommendarch.common.entities.Wine
 import com.pipe.d.dev.recommendarch.common.utils.Constants
 import com.pipe.d.dev.recommendarch.common.utils.OnClickListener
 import com.pipe.d.dev.recommendarch.common.view.WineBaseFragment
+import com.pipe.d.dev.recommendarch.common.viewModel.ShareFragmentViewModel
 import com.pipe.d.dev.recommendarch.favoriteModule.viewModel.FavoriteViewModel
 import com.pipe.d.dev.recommendarch.updateModule.view.UpdateDialogFragment
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.core.parameter.parametersOf
 
 /****
@@ -31,6 +35,7 @@ import org.koin.core.parameter.parametersOf
 class FavouriteFragment : WineBaseFragment(), OnClickListener {
 
     private val adapter: WineFavListAdapter by inject { parametersOf(this) }
+    private val sVm: ShareFragmentViewModel by activityViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -55,6 +60,9 @@ class FavouriteFragment : WineBaseFragment(), OnClickListener {
             vm.wines.observe(viewLifecycleOwner) {wines ->
                 adapter.submitList(wines)
             }
+        }
+        sVm.isDismiss.observe(viewLifecycleOwner) {
+            binding.viewModel?.getAllWines()
         }
     }
 
@@ -82,7 +90,10 @@ class FavouriteFragment : WineBaseFragment(), OnClickListener {
     }
 
     override fun onLongClick(wine: Wine) {
-        val fragmentManager = childFragmentManager
+        val args = Bundle()
+        args.putDouble(Constants.ARG_ID, wine.id)
+        findNavController().navigate(R.id.navigation_update, args)
+        /*val fragmentManager = childFragmentManager
         val fragment = UpdateDialogFragment()
         val args = Bundle()
         args.putDouble(Constants.ARG_ID, wine.id)
@@ -91,6 +102,6 @@ class FavouriteFragment : WineBaseFragment(), OnClickListener {
         fragment.setOnUpdateListener {
             binding.srlResults.isRefreshing = true
             binding.viewModel?.getAllWines()
-        }
+        }*/
     }
 }
