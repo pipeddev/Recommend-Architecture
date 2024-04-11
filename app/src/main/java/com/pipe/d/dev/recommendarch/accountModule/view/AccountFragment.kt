@@ -14,9 +14,11 @@ import com.pipe.d.dev.recommendarch.BR
 import com.pipe.d.dev.recommendarch.R
 import com.pipe.d.dev.recommendarch.accountModule.viewModel.AccountViewModel
 import com.pipe.d.dev.recommendarch.common.utils.Constants
+import com.pipe.d.dev.recommendarch.common.viewModel.ShareViewModel
 import com.pipe.d.dev.recommendarch.databinding.FragmentAccountBinding
 import com.pipe.d.dev.recommendarch.mainModule.view.MainActivity
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 /****
  * Project: Wines
@@ -37,6 +39,8 @@ class AccountFragment : Fragment() {
     private var _binding: FragmentAccountBinding? = null
     private val binding get() = _binding!!
 
+    private val sVm by activityViewModel<ShareViewModel>()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View {
         _binding = FragmentAccountBinding.inflate(inflater, container, false)
@@ -55,13 +59,8 @@ class AccountFragment : Fragment() {
             vm.snackBarMsg.observe(viewLifecycleOwner) {resMsg ->
                 resMsg?.let { showMsg(resMsg) }
             }
-            vm.isSignOut.observe(viewLifecycleOwner) {isSignOut ->
-                if (isSignOut) {
-                    (requireActivity() as MainActivity).apply {
-                        setupNavView(false)
-                        launchLoginUI()
-                    }
-                }
+            vm.isSignOut.observe(viewLifecycleOwner) { isSignOut ->
+                sVm.isSignOut.value = isSignOut
             }
         }
     }
