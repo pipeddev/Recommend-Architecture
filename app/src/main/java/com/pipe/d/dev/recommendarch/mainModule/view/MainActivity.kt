@@ -50,13 +50,19 @@ class MainActivity : AppCompatActivity() {
         vm.showNavView.observe(this) {showNavView ->
             setupNavView(showNavView)
         }
+        vm.isSignOut.observe(this) {isSignOut ->
+            if (isSignOut) {
+                setupNavView(false)
+                launchLoginUI()
+            }
+        }
     }
 
-    fun launchLoginUI() {
+    private fun launchLoginUI() {
         navController.navigate(R.id.navigation_login)
     }
 
-    fun setupNavView(isVisible: Boolean) {
+    private fun setupNavView(isVisible: Boolean) {
         binding.navView.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 }
