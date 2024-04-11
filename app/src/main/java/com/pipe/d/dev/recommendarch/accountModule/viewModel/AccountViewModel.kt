@@ -8,15 +8,10 @@ import com.pipe.d.dev.recommendarch.R
 import com.pipe.d.dev.recommendarch.accountModule.model.AccountRepository
 import com.pipe.d.dev.recommendarch.common.entities.FirebaseUser
 import com.pipe.d.dev.recommendarch.common.utils.Constants
+import com.pipe.d.dev.recommendarch.common.viewModel.BaseViewModel
 import kotlinx.coroutines.launch
 
-class AccountViewModel(private val repository: AccountRepository): ViewModel() {
-    private val _inProgress = MutableLiveData<Boolean>()
-    val inProgress: LiveData<Boolean> = _inProgress
-
-    private val _snackBarMsg = MutableLiveData<Int>()
-    val snackBarMsg: LiveData<Int> = _snackBarMsg
-
+class AccountViewModel(private val repository: AccountRepository): BaseViewModel() {
     private val _user = MutableLiveData<FirebaseUser?>()
     val user: LiveData<FirebaseUser?> = _user
 
@@ -27,29 +22,21 @@ class AccountViewModel(private val repository: AccountRepository): ViewModel() {
         getCurrentUser()
     }
 
-
     private fun getCurrentUser() {
-        viewModelScope.launch {
-            _inProgress.value = Constants.SHOW
-            try {
-                _user.value = repository.getCurrentUser()
-            }catch (ex: Exception){
-                _snackBarMsg.value = R.string.account_sign_out_fail
-            }finally {
-                _inProgress.value = Constants.HIDE
+        executeAction {
+            repository.getCurrentUser { result ->
+                _user.value = result
+
             }
         }
     }
     fun signOut() {
-        viewModelScope.launch {
-            _inProgress.value = Constants.SHOW
-            try {
-                _isSignOut.value = repository.signOut()
-            }catch (ex: Exception){
-                _snackBarMsg.value = R.string.account_request_user_fail
-            }finally {
-                _inProgress.value = Constants.HIDE
+        executeAction {
+            repository.signOut { result ->
+                _isSignOut.value = result
             }
         }
     }
+
+    override fun onPause() = clearValues()
 }
