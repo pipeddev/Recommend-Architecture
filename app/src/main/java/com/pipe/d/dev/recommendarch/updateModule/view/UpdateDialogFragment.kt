@@ -9,15 +9,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.ViewModelProvider
 import com.pipe.d.dev.recommendarch.BR
 import com.pipe.d.dev.recommendarch.R
 import com.pipe.d.dev.recommendarch.common.utils.Constants
 import com.pipe.d.dev.recommendarch.databinding.FragmentDialogUpdateBinding
-import com.pipe.d.dev.recommendarch.updateModule.model.domain.UpdateRoomDatabase
-import com.pipe.d.dev.recommendarch.updateModule.model.UpdateRepository
 import com.pipe.d.dev.recommendarch.updateModule.viewModel.UpdateViewModel
-import com.pipe.d.dev.recommendarch.updateModule.viewModel.UpdateViewModelFactory
+import org.koin.android.ext.android.inject
 
 /****
  * Project: Wines
@@ -37,7 +34,7 @@ class UpdateDialogFragment : DialogFragment(), OnShowListener {
 
     private var _binding: FragmentDialogUpdateBinding? = null
     private val binding get() = _binding!!
-    private lateinit var vm: UpdateViewModel
+
 
     private var _wineId = -1.0
 
@@ -76,7 +73,7 @@ class UpdateDialogFragment : DialogFragment(), OnShowListener {
             val positiveButton = it.getButton(DialogInterface.BUTTON_POSITIVE)
             val negativeButton = it.getButton(DialogInterface.BUTTON_NEGATIVE)
             positiveButton.setOnClickListener {
-                vm.updateWine(binding.rating.rating.toString())
+                binding.viewModel?.updateWine(binding.rating.rating.toString())
             }
             negativeButton.setOnClickListener { dismiss() }
         }
@@ -87,8 +84,7 @@ class UpdateDialogFragment : DialogFragment(), OnShowListener {
     }
 
     private fun setupViewModel() {
-        vm = ViewModelProvider(this,
-            UpdateViewModelFactory(UpdateRepository(UpdateRoomDatabase())))[UpdateViewModel::class.java]
+        val vm: UpdateViewModel by inject()
         binding.lifecycleOwner = this
         binding.setVariable(BR.viewModel, vm)
     }
@@ -96,8 +92,10 @@ class UpdateDialogFragment : DialogFragment(), OnShowListener {
     private fun setupObservers() {
         binding.viewModel?.let { vm ->
             vm.snackBarMsg.observe(viewLifecycleOwner) { resMsg ->
-                showMsg(resMsg)
-                if (resMsg == R.string.room_save_success) dismiss()
+                resMsg?.let {
+                    showMsg(resMsg)
+                    dismiss()
+                }
             }
         }
     }
@@ -107,11 +105,16 @@ class UpdateDialogFragment : DialogFragment(), OnShowListener {
     }
 
     private fun getWineById() {
-        if (_wineId != -1.0) vm.requestWine(_wineId)
+        if (_wineId != -1.0) binding.viewModel?.requestWine(_wineId)
     }
 
     fun setOnUpdateListener(block: () -> Unit) {
         onUpdateListener = block
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.viewModel?.onPause()
     }
 
     override fun onDismiss(dialog: DialogInterface) {
