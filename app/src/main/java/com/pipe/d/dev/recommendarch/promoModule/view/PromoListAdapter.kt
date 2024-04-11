@@ -5,15 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.pipe.d.dev.recommendarch.BR
 import com.pipe.d.dev.recommendarch.R
 import com.pipe.d.dev.recommendarch.common.entities.Promo
 import com.pipe.d.dev.recommendarch.databinding.ItemPromoBinding
+import com.pipe.d.dev.recommendarch.promoModule.view.adapters.PromoDiff
 
 /****
  * Project: Wines
@@ -29,7 +27,7 @@ import com.pipe.d.dev.recommendarch.databinding.ItemPromoBinding
  * Coupons on my Website:
  * www.alainnicolastello.com
  ***/
-class PromoListAdapter : ListAdapter<Promo, RecyclerView.ViewHolder>(PromoDiff()) {
+class PromoListAdapter(diff: PromoDiff) : ListAdapter<Promo, RecyclerView.ViewHolder>(diff) {
 
     private lateinit var context: Context
 
@@ -49,11 +47,5 @@ class PromoListAdapter : ListAdapter<Promo, RecyclerView.ViewHolder>(PromoDiff()
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         //val binding = ItemPromoBinding.bind(view)
         val binding = DataBindingUtil.bind<ItemPromoBinding>(view)
-    }
-
-    private class PromoDiff : DiffUtil.ItemCallback<Promo>() {
-        override fun areItemsTheSame(oldItem: Promo, newItem: Promo) = oldItem.id == newItem.id
-
-        override fun areContentsTheSame(oldItem: Promo, newItem: Promo) = oldItem == newItem
     }
 }

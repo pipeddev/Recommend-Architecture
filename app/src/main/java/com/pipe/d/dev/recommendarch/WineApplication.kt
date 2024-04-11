@@ -9,6 +9,7 @@ import com.pipe.d.dev.recommendarch.common.di.dataSourceModule
 import com.pipe.d.dev.recommendarch.common.di.domainModule
 import com.pipe.d.dev.recommendarch.common.di.modelModule
 import com.pipe.d.dev.recommendarch.common.di.viewModelModule
+import com.pipe.d.dev.recommendarch.promoModule.di.promoModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -36,12 +37,8 @@ class WineApplication : Application() {
 
         startKoin {
             androidContext(this@WineApplication)
-            modules(adapterModule,
-                viewModelModule,
-                modelModule,
-                domainModule,
-                dataSourceModule,
-                accountModule)
+            modules(adapterModule, viewModelModule, modelModule, domainModule,
+                dataSourceModule, accountModule, promoModule)
         }
 
         /*database = Room.databaseBuilder(this,

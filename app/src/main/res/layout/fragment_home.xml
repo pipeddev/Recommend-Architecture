@@ -44,6 +44,11 @@
             app:drawableTopCompat="@drawable/ic_keyboard_double_arrow_down"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            setVisibility="@{viewModel.wines.size() == 0}"/>
+            setVisibility="@{(!viewModel.inProgress &amp; viewModel.wines.size() == 0) }"/>
+
+        <include
+            android:id="@+id/content_progress"
+            layout="@layout/content_progress"
+            app:inProgress="@{viewModel.inProgress}"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
