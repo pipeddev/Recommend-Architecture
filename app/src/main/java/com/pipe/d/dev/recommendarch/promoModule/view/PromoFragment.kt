@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.pipe.d.dev.recommendarch.BR
 import com.pipe.d.dev.recommendarch.databinding.FragmentPromoBinding
-import com.pipe.d.dev.recommendarch.promoModule.model.Database
+import com.pipe.d.dev.recommendarch.promoModule.model.domain.PromoDatabase
 import com.pipe.d.dev.recommendarch.promoModule.model.PromoRepository
 import com.pipe.d.dev.recommendarch.promoModule.viewModel.PromoViewModel
 import com.pipe.d.dev.recommendarch.promoModule.viewModel.PromoViewModelFactory
@@ -53,7 +53,7 @@ class PromoFragment : Fragment() {
 
     private fun setupViewModel() {
         vm = ViewModelProvider(this, PromoViewModelFactory(
-            PromoRepository(Database())))[PromoViewModel::class.java]
+            PromoRepository(PromoDatabase())))[PromoViewModel::class.java]
         binding.lifecycleOwner = this
         binding.setVariable(BR.viewModel, vm)
     }
