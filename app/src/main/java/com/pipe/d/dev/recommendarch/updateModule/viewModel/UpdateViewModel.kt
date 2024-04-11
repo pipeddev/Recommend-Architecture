@@ -21,8 +21,8 @@ class UpdateViewModel(private val repository: UpdateRepository): BaseViewModel()
 
     fun updateWine(newRating: String) {
         executeAction {
-            repository.updateWine(wine.value, newRating) {
-                setSnackbarMsg(R.string.room_save_success)
+            repository.updateWine(wine.value, newRating) { result ->
+                setSnackbarMsg(result)
             }
         }
     }

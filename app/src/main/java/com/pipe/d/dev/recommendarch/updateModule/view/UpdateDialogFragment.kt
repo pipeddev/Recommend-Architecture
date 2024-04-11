@@ -94,7 +94,7 @@ class UpdateDialogFragment : DialogFragment(), OnShowListener {
             vm.snackBarMsg.observe(viewLifecycleOwner) { resMsg ->
                 resMsg?.let {
                     showMsg(resMsg)
-                    if (resMsg == R.string.room_save_success) dismiss()
+                    dismiss()
                 }
             }
         }
