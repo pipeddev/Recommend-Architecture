@@ -26,9 +26,9 @@ import org.koin.core.context.startKoin
  * www.alainnicolastello.com
  ***/
 class WineApplication : Application() {
-    companion object {
+    /*companion object {
         lateinit var database: WineDatabase
-    }
+    }*/
 
     override fun onCreate() {
         super.onCreate()
@@ -38,9 +38,10 @@ class WineApplication : Application() {
             modules(adapterModule, viewModelModule, modelModule, domainModule, dataSourceModule)
         }
 
-        database = Room.databaseBuilder(this,
+        /*database = Room.databaseBuilder(this,
             WineDatabase::class.java,
             "WineDatabase")
             .build()
+         */
     }
 }

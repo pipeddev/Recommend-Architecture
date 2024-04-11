@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pipe.d.dev.recommendarch.R
 import com.pipe.d.dev.recommendarch.common.entities.FirebaseUser
 import com.pipe.d.dev.recommendarch.common.entities.MyException
 import com.pipe.d.dev.recommendarch.common.utils.Constants
@@ -12,7 +13,7 @@ import com.pipe.d.dev.recommendarch.loginModule.model.LoginRepository
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val repository: LoginRepository): BaseViewModel() {
-    val username = MutableLiveData("cursoant")
+    val username = MutableLiveData("cursosant")
     val pin = MutableLiveData("1234")
 
 
@@ -35,6 +36,8 @@ class LoginViewModel(private val repository: LoginRepository): BaseViewModel() {
         executeAction {
             repository.login(username.value, pin.value) { result ->
                 _isValidAuth.value = result
+                if (!result)
+                    setSnackbarMsg(R.string.login_fail_credential)
             }
         }
     }

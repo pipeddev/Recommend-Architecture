@@ -33,6 +33,7 @@
     <string name="login_tv_loading">Loading…</string>
     <string name="login_auth_fail">Hello</string>
     <string name="login_login_fail">Authentication error</string>
+    <string name="login_fail_credential">Error credentials</string>
 
     <string name="promo_title">Promo</string>
     <string name="promo_request_fail">No promos</string>
