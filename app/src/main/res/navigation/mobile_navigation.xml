@@ -6,6 +6,12 @@
     app:startDestination="@+id/navigation_home">
 
     <fragment
+        android:id="@+id/navigation_login"
+        android:name="com.pipe.d.dev.recommendarch.loginModule.view.LoginFragment"
+        android:label="@string/login_title"
+        tools:layout="@layout/fragment_login" />
+
+    <fragment
         android:id="@+id/navigation_home"
         android:name="com.pipe.d.dev.recommendarch.homeModule.view.HomeFragment"
         android:label="@string/home_title"
