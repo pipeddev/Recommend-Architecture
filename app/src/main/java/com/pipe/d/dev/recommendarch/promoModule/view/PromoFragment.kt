@@ -6,21 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.pipe.d.dev.recommendarch.BR
-import com.pipe.d.dev.recommendarch.common.dataAccess.local.FakeFirebaseAuth
-import com.pipe.d.dev.recommendarch.common.dataAccess.local.getAllPromos
 import com.pipe.d.dev.recommendarch.databinding.FragmentPromoBinding
-import com.pipe.d.dev.recommendarch.loginModule.model.LoginRepository
-import com.pipe.d.dev.recommendarch.loginModule.viewModel.LoginViewModel
-import com.pipe.d.dev.recommendarch.loginModule.viewModel.LoginViewModelFactory
 import com.pipe.d.dev.recommendarch.promoModule.model.Database
 import com.pipe.d.dev.recommendarch.promoModule.model.PromoRepository
 import com.pipe.d.dev.recommendarch.promoModule.viewModel.PromoViewModel
 import com.pipe.d.dev.recommendarch.promoModule.viewModel.PromoViewModelFactory
-import kotlinx.coroutines.launch
 
 /****
  * Project: Wines
